@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Chat</title>
+</head>
+<body>
+  <div>
+    <ul class="ul">
+
+
+    </ul>
+    <form action="">
+      <label for="msg"> Message</label>
+      <textarea name="msg" class="msg"> </textarea>
+      <button type="button" name="send" class="send">Send</button>
+    </form>
+  </div>
+
+
+
+
+  <script src="https://cdn.socket.io/socket.io-1.2.0.js"> // а как не через сдн???</script>
+  <script>
+    var socket = io('http://localhost:3000/');
+
+    document.querySelector('.send').addEventListener('click', (ev) => {
+      ev.preventDefault();
+      let msg = document.querySelector('.msg').value;
+      console.log(msg);
+      socket.emit('message', msg);
+    });
+
+    socket.on('newMessage', (msg) => {
+      let li = document.createElement('li');
+      li.textContent = msg;
+      li.classList.add('messages');
+
+      document.querySelector('.ul').appendChild(li);
+    })
+
+  </script>
+</body>
+</html>
